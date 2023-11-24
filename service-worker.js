@@ -27,7 +27,8 @@ async function onInstall(event) {
 
 async function onActivate(event) {
     console.info('Service worker: Activate');
-
+  // Take control of all clients as soon as the service worker is activated
+    self.clients.claim();
     // Delete unused caches
     const cacheKeys = await caches.keys();
     await Promise.all(cacheKeys
