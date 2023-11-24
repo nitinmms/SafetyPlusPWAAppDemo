@@ -23,15 +23,13 @@ async function onInstall(event) {
     const assetsRequests = self.assetsManifest.assets
         .filter(asset => offlineAssetsInclude.some(pattern => pattern.test(asset.url)))
         .filter(asset => !offlineAssetsExclude.some(pattern => pattern.test(asset.url)))
-        //.map(asset => new Request(asset.url, { integrity: asset.hash, cache: 'no-cache' }));
-    .map(asset => new Request(asset.url));
+        .map(asset => new Request(asset.url));
     await caches.open(cacheName).then(cache => cache.addAll(assetsRequests));
 }
 
 async function onActivate(event) {
     console.info('Service worker: Activate');
-  // Take control of all clients as soon as the service worker is activated
-    self.clients.claim();
+
     // Delete unused caches
     const cacheKeys = await caches.keys();
     await Promise.all(cacheKeys
@@ -55,4 +53,4 @@ async function onFetch(event) {
 
     return cachedResponse || fetch(event.request);
 }
-/* Manifest version: FMNAOrYX */
+/* Manifest version: CgchFQ2w */
